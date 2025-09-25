@@ -1,81 +1,603 @@
 <!DOCTYPE html>
-
-<html lang="cs-cz">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Moje první webová stránka</title>
-        <link rel="stylesheet" href="styl.css" type="text/css" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-   
-
-        <link rel="shortcut icon" href="obrazky/jabko.ico" />
-        <meta name="description" content="Osobní portfolio programátora Honzy Bittnera." />
-        <meta name="keywords" content="portfolio, programátor, Honza Bittner" />
-    </head>
-
-    <body>
-
-        <header>
-            <div id="logo">
-                <h1>Honza <span>Bittner</span></h1>
-                <small>webdeveloper</small>
-
-            </div>
-
-            <nav>
-                <ul>
-                    <li class="aktivni"><a href="index.html">Domů</a></li>
-                    <li><a href="index.html">O mně</a></li>
-                    <li><a href="dovednosti.html">Dovednosti</a></li>
-                    <li><a href="reference.html">Reference</a></li>
-                    <li><a class="kontakt-tlacitko" href="kontakt.html">Kontakt</a></li>
-                </ul>
-            </nav>
-
-        </header>
-
-
-        <article>
-            <header>
-                <h1 class="centrovany">O mně</h1>
-            </header>
-
-            <section>
-                <img src="obrazky/swifty.png" class="avatar" alt="Programátor HoBi" />
-
-                <p>
-                    Vítejte na mém prvním webu, psát weby se teprve učím, ale myslím, že mi to docela jde.
-                </p>
-
-                <p>
-                    Jmenuji se Honza Bittner a je mi 16 let. Chodím na Střední průmyslovou školu v České Lípě na obor IT.
-                    Kontaktovat mě můžete na <a href="kontakt.html">kontaktní stránce</a>.
-                </p>
-
-                <p>
-                    Rád čtu a někdy (hlavně v létě) i sportuju.
-                </p>
-
-                <p>
-                    Mým hlavním koníčkem (a doufám že jednou i zaměstnáním) je <strong>programování</strong>!
-                </p>
-
-                <p class="tlacitko-odstavec">
-                    <a href="reference.html" class="reference-tlacitko">Moje reference</a>
-                </p>
-                <div class="cistic"></div>
-            </section>
-
-
-        <footer>
-            <p>
-                Vytvořil &copy;HoBi 2021 pro <a href="https://itnetwork.cz">itnetwork.cz</a>
-            </p>
-
-        </article>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahák - Základy Javy</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-    </body>
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            background-color: #8e44ad;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #9b59b6;
+            margin-top: 0;
+            border-left: 4px solid #9b59b6;
+            padding-left: 10px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .code {
+            background-color: #f8f9fa;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        .tip {
+            background-color: #f4ecf7;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .table th {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .datatype {
+            background-color: #e8f4f8;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .keyword {
+            background-color: #9b59b6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .comparison-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .tip {
+                background-color: #f0f0f0;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 80%;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-button">Základy</a>
+        <a href="oop.html" class="nav-button">OOP</a>
+        <a href="mysql.html" class="nav-button">MySQL a Kolekce</a>
+        <a href="bonus.html" class="nav-button">Doplňkové okruhy</a>
+    </div>
+
+    <h1>Tahák - Základní konstrukce jazyka Java</h1>
+    
+    <div class="section">
+        <h2>Proměnné a datové typy</h2>
+        
+        <h3>Primitivní datové typy</h3>
+        <table class="table">
+            <tr>
+                <th>Typ</th>
+                <th>Velikost</th>
+                <th>Rozsah</th>
+                <th>Výchozí hodnota</th>
+                <th>Příklad</th>
+            </tr>
+            <tr>
+                <td><span class="datatype">byte</span></td>
+                <td>8 bitů</td>
+                <td>-128 až 127</td>
+                <td>0</td>
+                <td><span class="keyword">byte</span> b = 100;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">short</span></td>
+                <td>16 bitů</td>
+                <td>-32,768 až 32,767</td>
+                <td>0</td>
+                <td><span class="keyword">short</span> s = 1000;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">int</span></td>
+                <td>32 bitů</td>
+                <td>-2<sup>31</sup> až 2<sup>31</sup>-1</td>
+                <td>0</td>
+                <td><span class="keyword">int</span> i = 100000;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">long</span></td>
+                <td>64 bitů</td>
+                <td>-2<sup>63</sup> až 2<sup>63</sup>-1</td>
+                <td>0L</td>
+                <td><span class="keyword">long</span> l = 100000L;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">float</span></td>
+                <td>32 bitů</td>
+                <td>±3.4e<sup>±38</sup></td>
+                <td>0.0f</td>
+                <td><span class="keyword">float</span> f = 3.14f;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">double</span></td>
+                <td>64 bitů</td>
+                <td>±1.7e<sup>±308</sup></td>
+                <td>0.0d</td>
+                <td><span class="keyword">double</span> d = 3.14;</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">char</span></td>
+                <td>16 bitů</td>
+                <td>0 až 65,535</td>
+                <td>'\u0000'</td>
+                <td><span class="keyword">char</span> c = 'A';</td>
+            </tr>
+            <tr>
+                <td><span class="datatype">boolean</span></td>
+                <td>1 bit</td>
+                <td>true/false</td>
+                <td>false</td>
+                <td><span class="keyword">boolean</span> flag = true;</td>
+            </tr>
+        </table>
+        
+        <h3>Referenční datové typy</h3>
+        <ul>
+            <li><span class="datatype">String</span> - textové řetězce</li>
+            <li><span class="datatype">Array</span> - pole</li>
+            <li>Objekty - instance tříd</li>
+            <li>Výchozí hodnota: <span class="keyword">null</span></li>
+        </ul>
+        
+        <div class="code">// Deklarace a inicializace proměnných
+int cislo = 10;
+double desetinne = 3.14;
+char pismeno = 'A';
+boolean pravda = true;
+String text = "Ahoj světe!";
+
+// Konstanty (final)
+final double PI = 3.14159;
+final int MAX_POCET = 100;</div>
+    </div>
+    
+    <div class="section">
+        <h2>Parsování (převody mezi typy)</h2>
+        
+        <h3>Automatické převody (implicitní)</h3>
+        <ul>
+            <li>byte → short → int → long → float → double</li>
+            <li>char → int</li>
+            <li>K menšímu typu se musí explicitně převádět</li>
+        </ul>
+        
+        <h3>Explicitní převody (casting)</h3>
+        <div class="code">// Zúžení (může způsobit ztrátu dat)
+double d = 3.14;
+int i = (int) d;  // i = 3 (ztráta desetinné části)
+
+// Rozšíření (bezpečné)
+int x = 100;
+double y = x;     // y = 100.0
+
+// Parsování řetězců
+String text = "123";
+int cislo = Integer.parseInt(text);      // cislo = 123
+double dbl = Double.parseDouble("3.14"); // dbl = 3.14
+boolean bool = Boolean.parseBoolean("true"); // bool = true
+
+// Převod na řetězec
+int num = 456;
+String str = String.valueOf(num);        // str = "456"
+String str2 = Integer.toString(456);     // str2 = "456"</div>
+    </div>
+    
+    <div class="section">
+        <h2>Podmínky</h2>
+        
+        <div class="comparison">
+            <div class="comparison-item">
+                <h3>if-else</h3>
+                <div class="code">int vek = 18;
+
+if (vek < 18) {
+    System.out.println("Neplnoletý");
+} else if (vek >= 18 && vek < 65) {
+    System.out.println("Dospělý");
+} else {
+    System.out.println("Důchodce");
+}</div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>switch-case</h3>
+                <div class="code">int den = 3;
+String nazevDne;
+
+switch (den) {
+    case 1:
+        nazevDne = "Pondělí";
+        break;
+    case 2:
+        nazevDne = "Úterý";
+        break;
+    case 3:
+        nazevDne = "Středa";
+        break;
+    default:
+        nazevDne = "Neznámý den";
+}</div>
+            </div>
+        </div>
+        
+        <div class="code">// Ternární operátor
+int vek = 20;
+String status = (vek >= 18) ? "Dospělý" : "Neplnoletý";</div>
+    </div>
+    
+    <div class="section">
+        <h2>Operátory</h2>
+        
+        <table class="table">
+            <tr>
+                <th>Typ operátoru</th>
+                <th>Operátory</th>
+                <th>Příklad</th>
+            </tr>
+            <tr>
+                <td>Aritmetické</td>
+                <td>+ - * / % ++ --</td>
+                <td>a + b, i++</td>
+            </tr>
+            <tr>
+                <td>Relační</td>
+                <td>== != &lt; &gt; &lt;= &gt;=</td>
+                <td>a == b, x &gt; y</td>
+            </tr>
+            <tr>
+                <td>Logické</td>
+                <td>&& || !</td>
+                <td>a && b, !flag</td>
+            </tr>
+            <tr>
+                <td>Přiřazovací</td>
+                <td>= += -= *= /= %=</td>
+                <td>a += 5 (ekvivalent a = a + 5)</td>
+            </tr>
+            <tr>
+                <td>Bitové</td>
+                <td>& | ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</td>
+                <td>a & b, x &lt;&lt; 2</td>
+            </tr>
+        </table>
+        
+        <div class="code">// Příklady operátorů
+int a = 10, b = 3;
+
+// Aritmetické
+int soucet = a + b;      // 13
+int podil = a / b;       // 3 (celočíselné dělení)
+int zbytek = a % b;      // 1
+
+// Relační
+boolean rovnost = (a == b);  // false
+boolean vetsi = (a > b);     // true
+
+// Logické
+boolean podminka = (a > 5) && (b < 10);  // true
+
+// Přiřazovací
+a += 5;  // ekvivalent a = a + 5, výsledek a = 15</div>
+    </div>
+    
+    <div class="section">
+        <h2>Cykly</h2>
+        
+        <div class="comparison">
+            <div class="comparison-item">
+                <h3>for cyklus</h3>
+                <div class="code">// Klasický for
+for (int i = 0; i < 5; i++) {
+    System.out.println(i);
+}
+
+// Výsledek: 0 1 2 3 4</div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>foreach cyklus</h3>
+                <div class="code">int[] cisla = {1, 2, 3, 4, 5};
+
+for (int cislo : cisla) {
+    System.out.println(cislo);
+}
+
+// Výsledek: 1 2 3 4 5</div>
+            </div>
+        </div>
+        
+        <div class="comparison">
+            <div class="comparison-item">
+                <h3>while cyklus</h3>
+                <div class="code">int i = 0;
+while (i < 5) {
+    System.out.println(i);
+    i++;
+}</div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>do-while cyklus</h3>
+                <div class="code">int i = 0;
+do {
+    System.out.println(i);
+    i++;
+} while (i < 5);</div>
+            </div>
+        </div>
+        
+        <div class="code">// Řízení cyklů
+for (int i = 0; i < 10; i++) {
+    if (i == 3) {
+        continue;  // přeskočí aktuální iteraci
+    }
+    if (i == 7) {
+        break;     // ukončí celý cyklus
+    }
+    System.out.println(i);
+}
+// Výsledek: 0 1 2 4 5 6</div>
+    </div>
+    
+    <div class="section">
+        <h2>Pole a metody pro práci s polem</h2>
+        
+        <h3>Deklarace a inicializace pole</h3>
+        <div class="code">// Různé způsoby deklarace pole
+int[] cisla1 = new int[5];           // pole 5 nul
+int[] cisla2 = {1, 2, 3, 4, 5};      // pole s hodnotami
+int[] cisla3 = new int[]{1, 2, 3};   // alternativní syntaxe
+
+// Dvourozměrné pole
+int[][] matice = new int[3][3];
+int[][] matice2 = {{1,2,3}, {4,5,6}};</div>
+        
+        <h3>Základní metody pro práci s poli</h3>
+        <div class="code">int[] cisla = {5, 2, 8, 1, 9};
+
+// Délka pole
+int delka = cisla.length;  // 5
+
+// Přístup k elementům
+int prvek = cisla[0];      // 5 (první prvek)
+cisla[0] = 10;             // změna hodnoty
+
+// Procházení pole
+for (int i = 0; i < cisla.length; i++) {
+    System.out.println(cisla[i]);
+}
+
+// Třídění
+Arrays.sort(cisla);        // {1, 2, 5, 8, 9}
+
+// Vyhledávání
+int index = Arrays.binarySearch(cisla, 5);  // vrátí index
+
+// Kopírování
+int[] kopie = Arrays.copyOf(cisla, cisla.length);
+
+// Porovnání polí
+boolean stejne = Arrays.equals(cisla, kopie);</div>
+    </div>
+    
+    <div class="section">
+        <h2>Metody pro práci s řetězci (String)</h2>
+        
+        <div class="code">String text = " Hello World! ";
+
+// Základní operace
+int delka = text.length();           // 14
+String velka = text.toUpperCase();   // " HELLO WORLD! "
+String mala = text.toLowerCase();    // " hello world! "
+String bezMezer = text.trim();       // "Hello World!"
+
+// Porovnávání
+boolean rovna = text.equals("Ahoj"); // false
+boolean rovnaIgnoreCase = text.equalsIgnoreCase("hello");
+
+// Vyhledávání
+int index = text.indexOf("World");   // 7
+boolean obsahuje = text.contains("Hello"); // true
+boolean zaciná = text.startsWith(" Hello"); // true
+boolean konci = text.endsWith("! "); // true
+
+// Podřetězce
+String cast = text.substring(1, 6);  // "Hello"
+String nahrazeny = text.replace("World", "Java");
+
+// Rozdělení a spojení
+String[] slova = text.split(" ");
+String spojeny = String.join("-", "A", "B", "C"); // "A-B-C"
+
+// Převod na pole znaků
+char[] znaky = text.toCharArray();
+
+// Formátování
+String formatovany = String.format("Číslo: %d, Text: %s", 10, "Ahoj");</div>
+    </div>
+    
+    <div class="section">
+        <h2>Matematické funkce (Math třída)</h2>
+        
+        <div class="code">// Základní matematické operace
+double a = 4.7, b = 2.3;
+
+// Zaokrouhlování
+double zaokrouhlene = Math.round(a);     // 5.0
+double floor = Math.floor(a);            // 4.0 (dolů)
+double ceil = Math.ceil(a);              // 5.0 (nahoru)
+
+// Mocniny a odmocniny
+double mocnina = Math.pow(2, 3);         // 8.0
+double odmocnina = Math.sqrt(16);        // 4.0
+double kubicka = Math.cbrt(27);          // 3.0
+
+// Goniometrické funkce
+double sin = Math.sin(Math.PI / 2);      // 1.0
+double cos = Math.cos(0);                // 1.0
+double tan = Math.tan(Math.PI / 4);      // 1.0
+
+// Logaritmy
+double log = Math.log(10);               // přirozený log
+double log10 = Math.log10(100);          // log base 10
+
+// Absolutní hodnota
+double abs = Math.abs(-5.5);             // 5.5
+
+// Minima a maxima
+double max = Math.max(a, b);             // 4.7
+double min = Math.min(a, b);             // 2.3
+
+// Náhodné číslo
+double nahodne = Math.random();          // 0.0 - 1.0
+int nahodneInt = (int)(Math.random() * 100); // 0-99</div>
+        
+        <div class="tip">
+            <strong>Tipy pro kvíz:</strong><br>
+            • Pamatujte, že Java je case-sensitive (velká/malá písmena)<br>
+            • Indexy pole začínají od 0, ne od 1<br>
+            • String je immutable - metody vrací nový String<br>
+            • Dělení celých čísel vrací celé číslo (ztráta desetinné části)<br>
+            • == porovnává reference u objektů, equals() porovnává obsah
+        </div>
+    </div>
+</body>
 </html>

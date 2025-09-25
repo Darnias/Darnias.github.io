@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahák - OOP v Javě</title>
+        <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            background-color: #8e44ad;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #9b59b6;
+            margin-top: 0;
+            border-left: 4px solid #9b59b6;
+            padding-left: 10px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .code {
+            background-color: #f8f9fa;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        .tip {
+            background-color: #f4ecf7;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .table th {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .datatype {
+            background-color: #e8f4f8;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .keyword {
+            background-color: #9b59b6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .comparison-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .tip {
+                background-color: #f0f0f0;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 80%;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-button">Základy</a>
+        <a href="oop.html" class="nav-button">OOP</a>
+        <a href="mysql.html" class="nav-button">MySQL a Kolekce</a>
+        <a href="bonus.html" class="nav-button">Doplňkové okruhy</a>
+    </div>
+    <h1>Tahák - Objektově-orientované programování v Javě</h1>
+    
+    <div class="section">
+        <h2>Základy OOP v Javě</h2>
+        
+        <h3>Třídy a instance</h3>
+        <ul>
+            <li><strong>Třída</strong> - šablona nebo blueprint pro vytváření objektů</li>
+            <li><strong>Instance</strong> - konkrétní objekt vytvořený podle třídy</li>
+            <li><strong>Konstruktor</strong> - speciální metoda pro inicializaci objektu</li>
+            <li>Klíčové slovo <span class="keyword">new</span> - vytváří novou instanci</li>
+        </ul>
+        
+        <div class="code">// Definice třídy
+public class Auto {
+    // Atributy (vlastnosti)
+    private String znacka;
+    private int rokVyroby;
+    
+    // Konstruktor
+    public Auto(String znacka, int rokVyroby) {
+        this.znacka = znacka;
+        this.rokVyroby = rokVyroby;
+    }
+    
+    // Metody (chování)
+    public void zatrub() {
+        System.out.println("HONK HONK!");
+    }
+}
+
+// Vytvoření instance
+Auto mojeAuto = new Auto("Škoda", 2020);
+mojeAuto.zatrub(); // Volání metody</div>
+        
+        <h3>Atributy a metody</h3>
+        <ul>
+            <li><strong>Atributy</strong> - proměnné uvnitř třídy (stav objektu)</li>
+            <li><strong>Metody</strong> - funkce uvnitř třídy (chování objektu)</li>
+            <li><span class="keyword">this</span> - reference na aktuální instanci</li>
+            <li>Modifikátory přístupu: <span class="keyword">public</span>, <span class="keyword">private</span>, <span class="keyword">protected</span></li>
+        </ul>
+        
+        <div class="code">public class Student {
+    // Atributy
+    private String jmeno;
+    private int vek;
+    
+    // Metody
+    public void nastavJmeno(String jmeno) {
+        this.jmeno = jmeno; // this rozlišuje atribut od parametru
+    }
+    
+    public String vratJmeno() {
+        return this.jmeno;
+    }
+    
+    public void pozdrav() {
+        System.out.println("Ahoj, já jsem " + jmeno);
+    }
+}</div>
+        
+        <h3>Zapouzdření (Encapsulation)</h3>
+        <ul>
+            <li>Jeden ze čtyř pilířů OOP</li>
+            <li>Skrývání vnitřní implementace před vnějším světem</li>
+            <li>Atributy jsou <span class="keyword">private</span>, přístup přes veřejné metody</li>
+            <li>Zabraňuje přímé manipulaci s daty</li>
+        </ul>
+        
+        <div class="code">public class BankovniUcet {
+    private double zustatek;
+    
+    // Kontrolovaný přístup přes metody
+    public void vlozPenize(double castka) {
+        if (castka > 0) {
+            this.zustatek += castka;
+        }
+    }
+    
+    public boolean vyberPenize(double castka) {
+        if (castka > 0 && castka <= this.zustatek) {
+            this.zustatek -= castka;
+            return true;
+        }
+        return false;
+    }
+    
+    public double getZustatek() {
+        return this.zustatek;
+    }
+}</div>
+        
+        <h3>Základní metody objektů</h3>
+        <ul>
+            <li><strong>toString()</strong> - vrací textovou reprezentaci objektu</li>
+            <li><strong>equals()</strong> - porovnává objekty na rovnost</li>
+            <li><strong>hashCode()</strong> - vrací hash kód objektu</li>
+            <li>Všechny třídy dědí od třídy <span class="keyword">Object</span></li>
+        </ul>
+        
+        <div class="code">public class Osoba {
+    private String jmeno;
+    private int vek;
+    
+    @Override
+    public String toString() {
+        return "Osoba{jmeno='" + jmeno + "', vek=" + vek + "}";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Osoba osoba = (Osoba) obj;
+        return vek == osoba.vek && jmeno.equals(osoba.jmeno);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(jmeno, vek);
+    }
+}
+
+// Použití
+Osoba osoba = new Osoba("Jan", 25);
+System.out.println(osoba.toString()); // Osoba{jmeno='Jan', vek=25}</div>
+        
+        <h3>Dědičnost a polymorfismus</h3>
+        
+        <div class="principle">
+            <strong>Dědičnost (Inheritance):</strong> Třída může dědit od jiné třídy<br>
+            <strong>Polymorfismus:</strong> Schopnost objektu mít různé formy
+        </div>
+        
+        <div class="code">// Nadřazená třída (rodič)
+public class Zvire {
+    protected String jmeno;
+    
+    public Zvire(String jmeno) {
+        this.jmeno = jmeno;
+    }
+    
+    public void zvuk() {
+        System.out.println("Zvire vydava zvuk");
+    }
+}
+
+// Podtřída (dítě) - dědí od Zvire
+public class Pes extends Zvire {
+    public Pes(String jmeno) {
+        super(jmeno); // Volání konstruktoru rodiče
+    }
+    
+    @Override
+    public void zvuk() {
+        System.out.println(jmeno + " steka: Haf haf!");
+    }
+    
+    // Specifická metoda pouze pro Psa
+    public void aport() {
+        System.out.println(jmeno + " aportuje!");
+    }
+}
+
+// Polymorfismus
+Zvire mojeZvire = new Pes("Rex");
+mojeZvire.zvuk(); // Rex steka: Haf haf!
+// mojeZvire.aport(); // Chyba - metoda není v Zvire</div>
+        
+        <h3>Gettery a Settery</h3>
+        <ul>
+            <li>Standardní způsob pro přístup k privátním atributům</li>
+            <li>Gettery - vracejí hodnotu atributu</li>
+            <li>Settery - nastavují hodnotu atributu</li>
+            <li>Umožňují validaci a kontrolu při nastavování hodnot</li>
+        </ul>
+        
+        <div class="code">public class Uzivatel {
+    private String jmeno;
+    private int vek;
+    private String email;
+    
+    // Gettery
+    public String getJmeno() {
+        return jmeno;
+    }
+    
+    public int getVek() {
+        return vek;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    // Settery s validací
+    public void setJmeno(String jmeno) {
+        if (jmeno != null && !jmeno.trim().isEmpty()) {
+            this.jmeno = jmeno;
+        }
+    }
+    
+    public void setVek(int vek) {
+        if (vek >= 0 && vek <= 150) {
+            this.vek = vek;
+        }
+    }
+    
+    public void setEmail(String email) {
+        if (email != null && email.contains("@")) {
+            this.email = email;
+        }
+    }
+}</div>
+    </div>
+    
+    <div class="section">
+        <h2>4 pilíře OOP</h2>
+        
+        <table class="table">
+            <tr>
+                <th>Pilíř</th>
+                <th>Popis</th>
+                <th>Příklad v Javě</th>
+            </tr>
+            <tr>
+                <td><strong>Zapouzdření</strong><br>(Encapsulation)</td>
+                <td>Skrývání implementačních detailů</td>
+                <td>Privátní atributy + veřejné gettery/settery</td>
+            </tr>
+            <tr>
+                <td><strong>Dědičnost</strong><br>(Inheritance)</td>
+                <td>Předávání vlastností z rodiče na potomka</td>
+                <td><span class="keyword">extends</span> keyword, <span class="keyword">super</span></td>
+            </tr>
+            <tr>
+                <td><strong>Polymorfismus</strong><br>(Polymorphism)</td>
+                <td>Schopnost mít různé formy</td>
+                <td>Přetěžování metod, překrývání metod (<span class="keyword">@Override</span>)</td>
+            </tr>
+            <tr>
+                <td><strong>Abstrakce</strong><br>(Abstraction)</td>
+                <td>Skrývání komplexnosti</td>
+                <td>Abstraktní třídy, rozhraní (<span class="keyword">interface</span>)</td>
+            </tr>
+        </table>
+        
+        <h3>Modifikátory přístupu</h3>
+        
+        <table class="table">
+            <tr>
+                <th>Modifikátor</th>
+                <th>Viditelnost</th>
+                <th>Použití</th>
+            </tr>
+            <tr>
+                <td><span class="keyword">public</span></td>
+                <td>Všude</td>
+                <td>Veřejné rozhraní třídy</td>
+            </tr>
+            <tr>
+                <td><span class="keyword">private</span></td>
+                <td>Pouze uvnitř třídy</td>
+                <td>Interní implementace</td>
+            </tr>
+            <tr>
+                <td><span class="keyword">protected</span></td>
+                <td>Třída + podtřídy + stejný balíček</td>
+                <td>Pro dědičnost</td>
+            </tr>
+            <tr>
+                <td>(žádný - default)</td>
+                <td>Pouze stejný balíček</td>
+                <td>Balíčková viditelnost</td>
+            </tr>
+        </table>
+        
+        <h3>Klíčová slova OOP v Javě</h3>
+        
+        <div class="code">public abstract class Tvar {          // abstract - nelze instancovat
+    protected String barva;           // protected - viditelné pro potomky
+    
+    public abstract double obsah();   // abstraktní metoda - musí být implementována
+    
+    public static int pocetInstanci;  // static - patří třídě, ne instancím
+    public final String NAZEV = "Tvar"; // final - konstantní hodnota
+}
+
+public class Ctverec extends Tvar {   // extends - dědičnost
+    private double strana;
+    
+    public Ctverec(double strana) {
+        this.strana = strana;
+        pocetInstanci++;              // přístup ke statické proměnné
+    }
+    
+    @Override                        // @Override - překrývání metody
+    public double obsah() {
+        return strana * strana;
+    }
+}</div>
+        
+        <div class="tip">
+            <strong>Tip pro kvíz:</strong><br>
+            • Pamatujte si rozdíl mezi <span class="keyword">extends</span> (dědičnost tříd) a <span class="keyword">implements</span> (implementace rozhraní)<br>
+            • <span class="keyword">this</span> odkazuje na aktuální instanci, <span class="keyword">super</span> na rodiče<br>
+            • Abstraktní třídy mohou mít implementované metody, rozhraní nemohou (až do Java 8)
+        </div>
+    </div>
+</body>
+</html>

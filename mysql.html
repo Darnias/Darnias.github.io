@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahák - MySQL a kolekce v Javě</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            background-color: #8e44ad;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #9b59b6;
+            margin-top: 0;
+            border-left: 4px solid #9b59b6;
+            padding-left: 10px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .code {
+            background-color: #f8f9fa;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        .tip {
+            background-color: #f4ecf7;
+            border-left: 3px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .table th {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .datatype {
+            background-color: #e8f4f8;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .keyword {
+            background-color: #9b59b6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .comparison-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .tip {
+                background-color: #f0f0f0;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-button {
+                width: 80%;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-button">Základy</a>
+        <a href="oop.html" class="nav-button">OOP</a>
+        <a href="mysql.html" class="nav-button">MySQL a Kolekce</a>
+        <a href="bonus.html" class="nav-button">Doplňkové okruhy</a>
+    </div>
+
+    <h1>Tahák - MySQL a kolekce v Javě</h1>
+    
+    <div class="section">
+        <h2>MySQL</h2>
+        
+        <h3>CRUD operace</h3>
+        <ul>
+            <li><strong>CREATE (INSERT)</strong> - vkládání dat</li>
+            <li><strong>READ (SELECT)</strong> - čtení dat</li>
+            <li><strong>UPDATE</strong> - aktualizace dat</li>
+            <li><strong>DELETE</strong> - mazání dat</li>
+        </ul>
+        
+        <div class="code">-- INSERT - vložení záznamu
+INSERT INTO uzivatele (jmeno, email) VALUES ('Jan', 'jan@email.cz');
+
+-- SELECT - výběr dat
+SELECT * FROM uzivatele WHERE id = 1;
+
+-- UPDATE - aktualizace
+UPDATE uzivatele SET jmeno = 'Petr' WHERE id = 1;
+
+-- DELETE - smazání
+DELETE FROM uzivatele WHERE id = 1;</div>
+        
+        <h3>Základní SQL funkce</h3>
+        <ul>
+            <li><strong>Agregační</strong>: COUNT(), SUM(), AVG(), MAX(), MIN()</li>
+            <li><strong>Textové</strong>: CONCAT(), UPPER(), LOWER(), SUBSTRING()</li>
+            <li><strong>Datum a čas</strong>: NOW(), CURDATE(), DATE_FORMAT()</li>
+            <li><strong>Podmínky</strong>: IF(), CASE WHEN THEN ELSE END</li>
+        </ul>
+        
+        <div class="code">-- Počet uživatelů
+SELECT COUNT(*) FROM uzivatele;
+
+-- Průměrný věk
+SELECT AVG(vek) FROM uzivatele;
+
+-- Spojení jména a příjmení
+SELECT CONCAT(jmeno, ' ', prijmeni) AS cele_jmeno FROM uzivatele;</div>
+        
+        <h3>JOIN operace</h3>
+        <ul>
+            <li><strong>INNER JOIN</strong> - pouze odpovídající záznamy z obou tabulek</li>
+            <li><strong>LEFT JOIN</strong> - všechny záznamy z levé tabulky + odpovídající z pravé</li>
+            <li><strong>RIGHT JOIN</strong> - všechny záznamy z pravé tabulky + odpovídající z levé</li>
+            <li><strong>FULL OUTER JOIN</strong> - všechny záznamy z obou tabulek (MySQL nepodporuje přímo)</li>
+        </ul>
+        
+        <div class="code">-- INNER JOIN - uživatelé s objednávkami
+SELECT u.jmeno, o.datum 
+FROM uzivatele u
+INNER JOIN objednavky o ON u.id = o.uzivatel_id;
+
+-- LEFT JOIN - všichni uživatelé (i bez objednávek)
+SELECT u.jmeno, o.datum 
+FROM uzivatele u
+LEFT JOIN objednavky o ON u.id = o.uzivatel_id;</div>
+        
+        <h3>Databázové vazby (relace)</h3>
+        <ul>
+            <li><strong>1:1</strong> (jeden k jednomu) - jeden záznam v tabulce A odpovídá jednomu záznamu v tabulce B</li>
+            <li><strong>1:N</strong> (jeden k mnoha) - jeden záznam v tabulce A odpovídá více záznamům v tabulce B</li>
+            <li><strong>M:N</strong> (mnoha k mnoha) - realizuje se přes spojovací tabulku</li>
+        </ul>
+        
+        <div class="diagram">
+            <strong>Příklady vazeb:</strong><br>
+            • 1:1 - Uživatel → Profil (každý uživatel má jeden profil)<br>
+            • 1:N - Kategorie → Produkty (jedna kategorie má více produktů)<br>
+            • M:N - Studenti ←→ Kurzy (studenti mohou mít více kurzů)
+        </div>
+        
+        <h3>Databázové indexy</h3>
+        <ul>
+            <li>Urychlují vyhledávání v tabulkách</li>
+            <li>Primární klíč (PRIMARY KEY) je automaticky indexován</li>
+            <li>UNIQUE index - zajišťuje jedinečnost hodnot</li>
+            <li>INDEX - běžný index pro urychlení vyhledávání</li>
+            <li>FULLTEXT index - pro fulltextové vyhledávání</li>
+        </ul>
+        
+        <div class="code">-- Vytvoření indexu
+CREATE INDEX idx_email ON uzivatele (email);
+
+-- Vytvoření unikátního indexu
+CREATE UNIQUE INDEX idx_unique_email ON uzivatele (email);
+
+-- Složený index
+CREATE INDEX idx_jmeno_prijmeni ON uzivatele (jmeno, prijmeni);</div>
+    </div>
+    
+    <div class="section">
+        <h2>Kolekce a proudy v Javě</h2>
+        
+        <h3>Generické vs. obecné kolekce</h3>
+        
+        <table class="table">
+            <tr>
+                <th>Typ</th>
+                <th>Příklad</th>
+                <th>Výhody</th>
+                <th>Nevýhody</th>
+            </tr>
+            <tr>
+                <td><strong>Obecné kolekce</strong></td>
+                <td>List list = new ArrayList();</td>
+                <td>Kompatibilita se starším kódem</td>
+                <td>Chybějící typová kontrola, nutnost přetypování</td>
+            </tr>
+            <tr>
+                <td><strong>Generické kolekce</strong></td>
+                <td>List&lt;String&gt; list = new ArrayList&lt;&gt;();</td>
+                <td>Typová bezpečnost, čitelnost kódu</td>
+                <td>Méně flexibilní při práci s různými typy</td>
+            </tr>
+        </table>
+        
+        <div class="code">// Obecná kolekce - problém s typovou kontrolou
+List list = new ArrayList();
+list.add("text");
+list.add(123); // Kompilátor nehlásí chybu
+String text = (String) list.get(1); // Runtime error!
+
+// Generická kolekce - typová bezpečnost
+List<String> list = new ArrayList<>();
+list.add("text");
+// list.add(123); // Kompilační chyba
+String text = list.get(0); // Žádné přetypování</div>
+        
+        <h3>Hashmapy</h3>
+        <ul>
+            <li>Ukládá data jako dvojice klíč-hodnota</li>
+            <li>Klíče jsou unikátní, hodnoty mohou být duplicitní</li>
+            <li>Rychlý přístup k hodnotám pomocí klíče (O(1) v ideálním případě)</li>
+            <li>Implementace rozhraní Map</li>
+        </ul>
+        
+        <div class="code">// Vytvoření a použití HashMap
+Map<String, Integer> mapa = new HashMap<>();
+mapa.put("Jan", 25);
+mapa.put("Petr", 30);
+
+// Čtení hodnoty
+int vek = mapa.get("Jan"); // 25
+
+// Kontrola existence klíče
+if (mapa.containsKey("Jan")) {
+    System.out.println("Jan je v mapě");
+}
+
+// Iterace přes mapu
+for (Map.Entry<String, Integer> entry : mapa.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue());
+}</div>
+        
+        <h3>Základní principy Stream API</h3>
+        <ul>
+            <li><strong>Stream</strong> - sekvence elementů podporující operace</li>
+            <li><strong>Operace</strong> mohou být mezilehlé (intermediate) nebo koncové (terminal)</li>
+            <li><strong>Líné vyhodnocování</strong> - operace se provedou až při volání koncové operace</li>
+            <li>Funkcionální přístup - použití lambda výrazů</li>
+        </ul>
+        
+        <div class="code">// Základní operace Stream API
+List<String> jmena = Arrays.asList("Jan", "Petr", "Anna", "Eva");
+
+// Filtrování a transformace
+List<String> vysledek = jmena.stream()
+    .filter(jmeno -> jmeno.length() > 3)  // pouze jména delší než 3 znaky
+    .map(String::toUpperCase)             // převod na velká písmena
+    .sorted()                             // seřazení
+    .collect(Collectors.toList());        // sebrání do seznamu
+
+// Agregační operace
+long pocet = jmena.stream().count();
+Optional<String> nejdelsi = jmena.stream()
+    .max(Comparator.comparing(String::length));
+
+// Seskupování
+Map<Integer, List<String>> podleDelky = jmena.stream()
+    .collect(Collectors.groupingBy(String::length));</div>
+        
+        <h3>Hlavní rozdíly mezi kolekcemi</h3>
+        
+        <table class="table">
+            <tr>
+                <th>Rozhraní</th>
+                <th>Implementace</th>
+                <th>Charakteristika</th>
+                <th>Použití</th>
+            </tr>
+            <tr>
+                <td>List</td>
+                <td>ArrayList, LinkedList</td>
+                <td>Uspořádaná, povoluje duplicity</td>
+                <td>Když potřebujete zachovat pořadí</td>
+            </tr>
+            <tr>
+                <td>Set</td>
+                <td>HashSet, TreeSet</td>
+                <td>Neuspořádaná, žádné duplicity</td>
+                <td>Když potřebujete jedinečné hodnoty</td>
+            </tr>
+            <tr>
+                <td>Map</td>
+                <td>HashMap, TreeMap</td>
+                <td>Klíč-hodnota, klíče jedinečné</td>
+                <td>Když potřebujete asociativní pole</td>
+            </tr>
+            <tr>
+                <td>Queue</td>
+                <td>LinkedList, PriorityQueue</td>
+                <td>FIFO nebo prioritní fronta</td>
+                <td>Když potřebujete frontu</td>
+            </tr>
+        </table>
+        
+        <div class="tip">
+            <strong>Tip:</strong> Stream API je výkonné, ale pro jednoduché operace mohou být tradiční cykly čitelnější a efektivnější.
+        </div>
+    </div>
+</body>
+</html>
